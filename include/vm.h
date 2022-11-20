@@ -59,6 +59,7 @@ int get_mem(FBOD *f, int addr);
 void flip_pixel(FBOD *f, int x, int y);
 int get_pixel(FBOD *f, int x, int y);
 void clear_screen(FBOD *f);
+void read_flags(FBOD *f);
 void save_program(FBOD *f, char *filename);
 void load_program(FBOD *f, char *filename);
 

@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
 	FBOD *fvm = new_fbod();
 
 	InitWindow(PIXEL_SIZE*FBOD_SCREEN_SIZE, PIXEL_SIZE*FBOD_SCREEN_SIZE, "4BOD");
-	SetTargetFPS(60);
+	//SetTargetFPS(120);
 
 	int screen_id = 0; // 0: menu; 1: editor; 2: run;
 	unsigned char instruction_pointer = 0;
@@ -32,6 +32,7 @@ int main(int argc, char *argv[]) {
 				draw_editor(fvm);
 				break;
 			case 2:
+				read_flags(fvm);
 				instruction_pointer = perform_instruction(fvm, instruction_pointer);
 				draw_screen(fvm);
 				break;

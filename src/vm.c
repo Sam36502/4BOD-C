@@ -77,16 +77,16 @@ unsigned char perform_instruction(FBOD *f, unsigned char index) {
 			// Does nothing (Flags are added during program loading)
 			break;
 		case FBOD_ASM_JMP:
-			next_cmd = f->flags[get_mem(f, ins.arg1)];
+			next_cmd = f->flags[ins.arg1];
 			break;
 		case FBOD_ASM_CEQ:
-			next_cmd += (x == f->acc);
+			next_cmd += !(x == f->acc);
 			break;
 		case FBOD_ASM_CGT:
-			next_cmd += (x > f->acc);
+			next_cmd += !(x > f->acc);
 			break;
 		case FBOD_ASM_CLT:
-			next_cmd += (x < f->acc);
+			next_cmd += !(x < f->acc);
 			break;
 	}
 	return next_cmd;
@@ -125,6 +125,15 @@ int get_pixel(FBOD *f, int x, int y) {
 void clear_screen(FBOD *f) {
 	for (int i=0; i<FBOD_SCREEN_SIZE; i++) {
 		f->screen[i] = 0;
+	}
+}
+
+void read_flags(FBOD *f) {
+	for (int i=0; i<FBOD_PAGE_SIZE * FBOD_PROG_SIZE; i++) {
+		Instruction ins = f->program[i];
+		if (ins.instruction == FBOD_ASM_FLG) {
+			f->flags[ins.arg1] = i;
+		}
 	}
 }
 
